@@ -22,9 +22,9 @@ class Lexer {
       switch (ch) {
         case "<":
           if (this.lookAhead() === "/") {
-            token = this.parseStartTag();
-          } else {
             token = this.parseEndTag();
+          } else {
+            token = this.parseStartTag();
           }
           break;
         case "\n":
@@ -47,7 +47,7 @@ class Lexer {
       }
       this.text = this.text.slice(this.pos);
       this.pos = 0;
-      return token;
+      if(token) return token;
     }
   }
 
@@ -59,7 +59,7 @@ class Lexer {
     let p = this.pos;
     while (str === " " || str == "\n") {
       str = this.text[++p];
-    }
+    }    
     return str;
   }
   /**
@@ -83,14 +83,14 @@ class Lexer {
       // tag has props
       tag = words
         .split(" ")
-        .filter((ch) => ch != "")[0]
-        .slice(1);
+        .filter((ch) => ch != "")[0];
     } else {
-      tag = words.split(">")[0].slice(1);
+      tag = words.split(">")[0];
     }
     // skip type
     this.pos += tag.length;
     let props = this.getProps();
+    
     return {
       type: "begin",
       tag,
@@ -107,6 +107,7 @@ class Lexer {
     let words = this.text.slice(this.pos, index);
     let tag = words.split(">").filter((ch) => ch != "")[0];
     this.pos = index + 1;
+    
     return {
       type: "end",
       tag,
@@ -132,7 +133,7 @@ class Lexer {
       return res;
     });
     // move to next valid char
-    this.pos += words.length;
+    this.pos  = index+1;
     return props;
   }
   /**
