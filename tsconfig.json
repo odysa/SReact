@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": false, 
+    "baseUrl": ".", 
+    "jsx": "react", 
+    "module": "commonjs", 
+    "noImplicitAny": false, 
+    "paths": { 
+      "src": [ 
+        "./src"
+      ],
+    },
+    "target": "ESNext", 
+    "outDir": "./dist", 
+    "allowJs": true, 
+    "lib": [ 
+      "es5",
+      "es2015",
+      "es2016",
+      "es2017",
+      "es2018",
+      "dom"
+    ]
+  },
+  // 指定一个匹配列表（属于自动指定该路径下的所有ts相关文件）
+  "include": [
+    "jsx-parser"
+  ]
+}
